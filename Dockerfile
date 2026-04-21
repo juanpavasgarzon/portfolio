@@ -1,0 +1,8 @@
+FROM nginx:alpine
+
+COPY index.html        /usr/share/nginx/html/index.html
+COPY styles.css        /usr/share/nginx/html/styles.css
+COPY script.js         /usr/share/nginx/html/script.js
+COPY CV-Juan-Pavas.pdf /usr/share/nginx/html/CV-Juan-Pavas.pdf
+
+EXPOSE 80
