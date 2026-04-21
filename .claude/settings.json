@@ -1,0 +1,26 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 -c \"import os,json,sys; i=json.loads(os.environ.get('CLAUDE_TOOL_INPUT','{}')); 'CV-Juan-Pavas.pdf' in i.get('file_path','') and (print('BLOCKED: CV-Juan-Pavas.pdf is binary — replace the file directly.') or sys.exit(1))\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 -c \"import os,json,subprocess,sys; i=json.loads(os.environ.get('CLAUDE_TOOL_INPUT','{}')); fp=i.get('file_path',''); fp.endswith('script.js') and sys.exit(subprocess.run(['node','--check',fp],capture_output=True,text=True).returncode or print('✓ script.js syntax OK') or 0)\""
+          }
+        ]
+      }
+    ]
+  }
+}
