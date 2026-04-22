@@ -1,0 +1,27 @@
+{
+  "order": 3,
+  "company": "Extiblu",
+  "chips": ["JavaScript", "TypeScript", "React", "Node.js", "PHP"],
+  "role": {
+    "es": "FullStack Developer · Junior → Middle → Senior",
+    "en": "FullStack Developer · Junior → Mid → Senior"
+  },
+  "summary": {
+    "es": "Crecimiento desde rol junior hasta senior. Construí features end-to-end y gané alcance conforme crecía la responsabilidad técnica.",
+    "en": "Grew from junior to senior within the team. Built end-to-end features and took on more scope as technical responsibility grew."
+  },
+  "bullets": [
+    {
+      "es": "Desarrollo de interfaces y APIs para proyectos cliente, pixel-perfect y con foco en rendimiento.",
+      "en": "Built UIs and APIs for client projects — pixel-perfect and performance-focused."
+    },
+    {
+      "es": "Aplicación progresiva de principios SOLID, patrones de diseño y clean architecture.",
+      "en": "Progressive adoption of SOLID, design patterns and clean architecture."
+    },
+    {
+      "es": "Contribución a la librería interna de componentes y estándares del equipo.",
+      "en": "Contributed to the internal component library and team standards."
+    }
+  ]
+}

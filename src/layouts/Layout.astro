@@ -1,0 +1,266 @@
+---
+import '@/styles/global.css';
+import { SITE } from '@/config/site';
+import type { Lang } from '@/i18n';
+
+interface Props {
+  lang:         Lang;
+  title:        string;
+  description:  string;
+  canonicalUrl: string;
+  alternateUrl: string;
+}
+
+const { lang, title, description, canonicalUrl, alternateUrl } = Astro.props;
+
+const hreflangEs = lang === 'es' ? canonicalUrl : alternateUrl;
+const hreflangEn = lang === 'en' ? canonicalUrl : alternateUrl;
+
+const jsonLd = {
+  '@context':  'https://schema.org',
+  '@type':     'Person',
+  name:        SITE.name,
+  url:         SITE.url,
+  email:       SITE.email,
+  jobTitle:    SITE.jobTitle,
+  image:       SITE.avatarUrl,
+  sameAs:      [SITE.github, SITE.linkedin],
+  knowsAbout:  SITE.techStack,
+  address:     { '@type': 'PostalAddress', addressLocality: 'Medellín', addressCountry: 'CO' },
+};
+---
+<!DOCTYPE html>
+<html lang={lang} data-theme="dark" data-lang={lang}>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>{title}</title>
+  <meta name="description"  content={description} />
+  <meta name="author"       content={SITE.name} />
+  <meta name="keywords"     content="Full-Stack Developer, React, TypeScript, Node.js, NestJS, Laravel, Docker, Medellín, Colombia, Web Development, React Native" />
+  <meta name="robots"       content="index, follow" />
+  <link rel="canonical"     href={canonicalUrl} />
+
+  <meta property="og:type"              content="website" />
+  <meta property="og:url"               content={canonicalUrl} />
+  <meta property="og:title"             content={title} />
+  <meta property="og:description"       content={description} />
+  <meta property="og:image"             content={SITE.avatarUrl} />
+  <meta property="og:image:width"       content="460" />
+  <meta property="og:image:height"      content="460" />
+  <meta property="og:image:alt"         content={SITE.name} />
+  <meta property="og:locale"            content={lang === 'es' ? 'es_CO' : 'en_US'} />
+  <meta property="og:locale:alternate"  content={lang === 'es' ? 'en_US' : 'es_CO'} />
+  <meta property="og:site_name"         content="pavas.dev" />
+
+  <meta name="twitter:card"        content="summary" />
+  <meta name="twitter:url"         content={canonicalUrl} />
+  <meta name="twitter:title"       content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image"       content={SITE.avatarUrl} />
+  <meta name="twitter:creator"     content={SITE.twitterHandle} />
+
+  <link rel="alternate" hreflang="es"        href={hreflangEs} />
+  <link rel="alternate" hreflang="en"        href={hreflangEn} />
+  <link rel="alternate" hreflang="x-default" href={`${SITE.url}/`} />
+
+  <meta name="theme-color" content="#7C3AED" />
+
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Syne:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <script is:inline>
+    (function () {
+      const saved = localStorage.getItem('theme');
+      if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved;
+    })();
+  </script>
+</head>
+<body class="no-cursor">
+  <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+  <div class="cursor-dot"  id="cursorDot"  aria-hidden="true"></div>
+
+  <slot />
+
+  <script>
+    document.getElementById('themeToggle')?.addEventListener('click', () => {
+      const root = document.documentElement;
+      const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      root.dataset.theme = next;
+      localStorage.setItem('theme', next);
+    });
+
+    const langSelect = document.getElementById('langSelect') as HTMLSelectElement | null;
+    langSelect?.addEventListener('change', () => {
+      localStorage.setItem('lang', langSelect.value);
+      window.location.href = langSelect.value === 'en' ? '/en/' : '/';
+    });
+
+    const navEl = document.getElementById('nav');
+    if (navEl) {
+      const updateNavShadow = () => navEl.classList.toggle('scrolled', window.scrollY > 24);
+      window.addEventListener('scroll', updateNavShadow, { passive: true });
+      updateNavShadow();
+    }
+
+    const burgerBtn  = document.getElementById('burger');
+    const navLinkEl  = document.getElementById('navLinks');
+    if (burgerBtn && navLinkEl) {
+      burgerBtn.addEventListener('click', () => navLinkEl.classList.toggle('open'));
+      navLinkEl.querySelectorAll('a').forEach(a =>
+        a.addEventListener('click', () => navLinkEl.classList.remove('open'))
+      );
+    }
+
+    const typedEl = document.getElementById('typed');
+    if (typedEl) {
+      const roles: string[] = JSON.parse((typedEl as HTMLElement).dataset.roles || '[]');
+      let roleIndex = 0, charIndex = 0, deleting = false;
+      (function typeNextChar() {
+        const currentRole = roles[roleIndex];
+        typedEl.textContent = currentRole.slice(0, charIndex);
+        let delay = deleting ? 40 : 70;
+        if (!deleting && charIndex === currentRole.length) {
+          delay = 1400;
+          deleting = true;
+        } else if (deleting && charIndex === 0) {
+          deleting = false;
+          roleIndex = (roleIndex + 1) % roles.length;
+          delay = 300;
+        } else {
+          charIndex += deleting ? -1 : 1;
+        }
+        setTimeout(typeNextChar, delay);
+      })();
+    }
+
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry, index) => {
+          if (entry.isIntersecting) {
+            setTimeout(() => entry.target.classList.add('in'), index * 60);
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -60px 0px' }
+    );
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    const cursorDot  = document.getElementById('cursorDot');
+    const cursorRing = document.getElementById('cursorRing');
+    if (cursorDot && cursorRing) {
+      let mouseX = innerWidth / 2,  mouseY = innerHeight / 2;
+      let ringX  = mouseX,          ringY  = mouseY;
+
+      addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursorDot.style.transform = `translate(${mouseX}px,${mouseY}px) translate(-50%,-50%)`;
+      });
+
+      (function animateCursorRing() {
+        ringX += (mouseX - ringX) * 0.18;
+        ringY += (mouseY - ringY) * 0.18;
+        cursorRing.style.transform = `translate(${ringX}px,${ringY}px) translate(-50%,-50%)`;
+        requestAnimationFrame(animateCursorRing);
+      })();
+
+      document.querySelectorAll('a, button, input, textarea').forEach(el => {
+        el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+        el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+      });
+    }
+
+    document.querySelectorAll<HTMLElement>('.project-link[data-href]').forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        window.open(el.dataset.href, '_blank', 'noopener');
+      });
+    });
+
+    const cvBtn = document.getElementById('cvBtn') as HTMLAnchorElement | null;
+    if (cvBtn) {
+      cvBtn.addEventListener('click', async (e) => {
+        try {
+          const response = await fetch('/CV-Juan-Pavas.pdf', { method: 'HEAD' });
+          if (response.ok) return;
+        } catch (_) {}
+        e.preventDefault();
+        const email = (document.getElementById('contactForm') as HTMLFormElement | null)?.dataset.email ?? '';
+        const lines = [
+          'Juan Fernando Pavas Garzon', 'Full-Stack Developer',
+          'Medellin / Rionegro, Colombia', '',
+          `Email   : ${email}`,
+          'GitHub  : github.com/juanpavasgarzon',
+          'LinkedIn: linkedin.com/in/juanpavasgarzon', '',
+          'Experience:',
+          '- Senior FullStack Developer, Team 360 Staffing',
+          '- Tech Lead, Extiblu',
+          '- FullStack Developer Junior > Middle > Senior, Extiblu', '',
+          'Stack: React, React Native, TypeScript, Node.js, NestJS,',
+          'Express, Laravel, PHP, .NET/C#, MySQL, MongoDB, Docker.', '',
+          'Generated from pavas.dev',
+        ];
+        const escape = (s: string) => s.replace(/\\/g, '\\\\').replace(/\(/g, '\\(').replace(/\)/g, '\\)');
+        let streamContent = 'BT /F1 12 Tf 14 TL 60 780 Td ';
+        lines.forEach((line, i) => { streamContent += (i === 0 ? '' : 'T* ') + `(${escape(line)}) Tj `; });
+        streamContent += 'ET';
+        const pdfObjects = [
+          '<< /Type /Catalog /Pages 2 0 R >>',
+          '<< /Type /Pages /Kids [3 0 R] /Count 1 >>',
+          `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>`,
+          `<< /Length ${streamContent.length} >>\nstream\n${streamContent}\nendstream`,
+          '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>',
+        ];
+        let pdfContent = '%PDF-1.4\n';
+        const offsets: number[] = [];
+        pdfObjects.forEach((obj, i) => { offsets.push(pdfContent.length); pdfContent += `${i + 1} 0 obj\n${obj}\nendobj\n`; });
+        const xrefOffset = pdfContent.length;
+        pdfContent += `xref\n0 ${pdfObjects.length + 1}\n0000000000 65535 f \n`;
+        offsets.forEach(o => (pdfContent += String(o).padStart(10, '0') + ' 00000 n \n'));
+        pdfContent += `trailer\n<< /Size ${pdfObjects.length + 1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`;
+        const blob = new Blob([pdfContent], { type: 'application/pdf' });
+        const objectUrl = URL.createObjectURL(blob);
+        const anchor = document.createElement('a');
+        anchor.href = objectUrl;
+        anchor.download = 'CV-Juan-Pavas.pdf';
+        document.body.appendChild(anchor);
+        anchor.click();
+        anchor.remove();
+        setTimeout(() => URL.revokeObjectURL(objectUrl), 2000);
+      });
+    }
+
+    const contactForm   = document.getElementById('contactForm') as HTMLFormElement | null;
+    const formStatusEl  = document.getElementById('formStatus');
+    if (contactForm && formStatusEl) {
+      contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const nameValue  = (contactForm.elements.namedItem('name')  as HTMLInputElement).value.trim();
+        const emailValue = (contactForm.elements.namedItem('email') as HTMLInputElement).value.trim();
+        const msgValue   = (contactForm.elements.namedItem('msg')   as HTMLTextAreaElement).value.trim();
+        if (!nameValue || !emailValue || !msgValue) {
+          formStatusEl.textContent = contactForm.dataset.errEmpty!;
+          return;
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
+          formStatusEl.textContent = contactForm.dataset.errEmail!;
+          return;
+        }
+        const subject = contactForm.dataset.subject!.replace('{name}', nameValue);
+        const body    = `${msgValue}\n\n—\n${nameValue}\n${emailValue}`;
+        formStatusEl.textContent = contactForm.dataset.ok!;
+        window.location.href = `mailto:${contactForm.dataset.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      });
+    }
+  </script>
+</body>
+</html>

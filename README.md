@@ -2,44 +2,72 @@
 
 Personal portfolio of **Juan Fernando Pavas Garzón**, Full-Stack Developer based in Medellín / Rionegro, Colombia.
 
-🌐 [portfolio.pavas.io](https://portfolio.pavas.io)
+🌐 [pavas.dev](https://pavas.dev)
 
 ## Stack
 
-Vanilla HTML, CSS, and JavaScript — no frameworks, no build step.
+Astro 5 SSG · TypeScript · Vanilla CSS · Nginx · Docker
 
-| File | Purpose |
-|------|---------|
-| `index.html` | Markup + i18n data attributes |
-| `styles.css` | All styles (custom properties, dark/light theme) |
-| `script.js` | i18n, animations, custom cursor, contact form |
-| `favicon.svg` | SVG favicon matching the nav logo |
-| `CV-Juan-Pavas.pdf` | Downloadable CV |
-
-## Features
-
-- Dark / light theme toggle
-- Spanish / English i18n
-- Custom animated cursor
-- Scroll-reveal animations
-- Contact form via `mailto:`
-- Served via nginx on Docker
+| Layer | Detail |
+|-------|--------|
+| Framework | Astro 5 with i18n routing (`/` = ES, `/en/` = EN) |
+| Content | Astro Content Collections (JSON) + Zod validation |
+| i18n | Typed locale files with `satisfies Locale` shape check |
+| Styles | Vanilla CSS custom properties, dark/light theme |
+| SEO | OG, Twitter Card, hreflang, JSON-LD, sitemap |
+| Deploy | Multi-stage Docker: Node 22 builder → nginx:alpine |
 
 ## Run locally
 
 ```bash
-# Plain browser
-open index.html
+npm install
+npm run dev        # → http://localhost:4321
 
 # Docker
 docker build -t portfolio .
-docker run -p 8080:80 portfolio
-# → http://localhost:8080
+docker run -p 8080:80 portfolio   # → http://localhost:8080
 ```
 
-## Deploy
+## Build
 
-The site is containerized with nginx:alpine. Build and push the image to your registry, then deploy to your host of choice.
+```bash
+npm run build      # outputs to dist/
+npm run preview    # serve dist/ locally
+npm run check      # TypeScript type-check (requires @astrojs/check)
+```
+
+## Project structure
+
+```
+src/
+  config/site.ts        # single source of truth — name, email, URLs
+  content/
+    config.ts           # Zod schemas for Content Collections
+    projects/*.json     # bilingual project entries
+    experience/*.json   # bilingual experience entries
+  data/
+    skills.ts           # skill groups with bilingual labels
+    articles.ts         # blog article links
+  i18n/
+    locales/es.ts       # UI string source of truth
+    locales/en.ts       # enforced shape via `satisfies Locale`
+    index.ts            # typed useT(lang) helper
+  components/           # Astro components (one per section)
+  layouts/Layout.astro  # full SEO head, scripts, cursor
+  pages/
+    index.astro         # ES (default locale)
+    en/index.astro      # EN
+  styles/global.css     # design tokens, dark/light theme
+public/
+  favicon.svg
+  CV-Juan-Pavas.pdf
+```
+
+## Adding content
+
+See `.claude/skills/add-content/SKILL.md` for schemas and file locations.
+
+## Deploy
 
 ```bash
 docker build -t portfolio .

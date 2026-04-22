@@ -1,15 +1,14 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
 ## Stack
 
-Vanilla HTML, CSS, JavaScript — zero dependencies, zero build step. No npm, no framework, no bundler.
+Astro 5 (SSG) · TypeScript strict · Vanilla CSS · Zero runtime framework
 
 ## Run Locally
 
 ```bash
-open index.html          # direct in browser
+npm install
+npm run dev       # → http://localhost:4321
 
 docker build -t portfolio .
 docker run -p 8080:80 portfolio   # → http://localhost:8080
@@ -17,32 +16,72 @@ docker run -p 8080:80 portfolio   # → http://localhost:8080
 
 ## Architecture
 
-Single-page portfolio with three files doing all the work:
+```
+src/
+  config/
+    site.ts              ← single source of truth (email, URLs, name, avatar)
+  content/
+    config.ts            ← Zod schemas for Astro Content Collections
+    experience/*.json    ← bilingual { es, en } per field
+    projects/*.json      ← bilingual { es, en } per field
+  data/
+    skills.ts            ← SkillGroup[] with inline { es, en } labels
+    articles.ts          ← Article[] with inline { es, en } fields
+  i18n/
+    index.ts             ← useT(lang) → (key: TranslationKey) => string
+    locales/
+      es.ts              ← source of truth (as const)
+      en.ts              ← (as const satisfies Locale) — TS errors if key missing
+  layouts/
+    Layout.astro         ← base HTML, full SEO head, all client scripts
+  components/
+    Nav / Hero / Skills / Experience / Projects / Blog / Contact / Footer
+  pages/
+    index.astro          ← / (español)
+    en/index.astro       ← /en/ (english)
+  styles/
+    global.css
+public/
+  favicon.svg · CV-Juan-Pavas.pdf · robots.txt
+```
 
-| File | Role |
-|------|------|
-| `index.html` | Markup with `data-i18n` attributes for bilingual content |
-| `script.js` | i18n engine, dynamic rendering, cursor, animations, form |
-| `styles.css` | Full design system: CSS custom properties, dark/light themes |
+## Path alias
 
-**script.js internals:**
-- Lines 4–227: bilingual dictionary (ES/EN) + i18n engine (`data-i18n` → `textContent`)
-- Lines 238–386: renders SKILLS, EXPERIENCE, PROJECTS, ARTICLES arrays → `innerHTML`
-- Lines 388+: theme toggle, custom cursor, IntersectionObserver scroll reveal, contact form
+`@/` → `src/`. All imports use this alias.
 
-**i18n pattern:** Add `data-i18n="section.key"` to HTML, add matching keys to both `translations.es` and `translations.en` in script.js.
+## i18n
 
-**Adding content** (skills, projects, experience, blog): edit the arrays near the top of `script.js`; the render functions pick them up automatically.
+- `es.ts` = source of truth for all UI translation keys
+- `en.ts` uses `satisfies Locale` — TS compile-error if key missing
+- `useT(lang)` returns typed `(key: TranslationKey) => string`
+- Content (projects, experience, articles) carries own bilingual data — no i18n keys needed
 
-**Theme system:** CSS custom properties on `:root` with `[data-theme="light"]` override. Both dark and light values required when adding new color tokens.
+## Content Collections
 
-**Persistence:** theme and language selections saved to `localStorage`.
+Projects and experience in `src/content/`. Add entry via JSON file:
+
+```bash
+src/content/projects/myproject.json
+src/content/experience/mycompany.json
+```
+
+Required fields from Zod schemas in `src/content/config.ts`. Astro validates at build time.
+
+## Adding content
+
+- **New project/experience** → JSON in `src/content/` (Zod-validated, bilingual inline)
+- **New article** → entry in `src/data/articles.ts`
+- **New skill** → item in `src/data/skills.ts`
+- **New UI string** → key in `src/i18n/locales/es.ts` **and** `src/i18n/locales/en.ts`
+
+## Site config
+
+All author data, email, URLs, social links in `src/config/site.ts`. Never hardcode elsewhere.
+
+## SEO
+
+Full meta in `src/layouts/Layout.astro`: title, description, canonical, OG, Twitter Card, hreflang, JSON-LD Person schema, sitemap, robots.txt.
 
 ## Deployment
 
-Containerized with `nginx:alpine`. The Dockerfile copies `index.html`, `styles.css`, `script.js`, `favicon.svg`, and `CV-Juan-Pavas.pdf` to `/usr/share/nginx/html`.
-
-```bash
-docker build -t portfolio .
-docker push <registry>/portfolio
-```
+Multi-stage Docker: Node 22 builds → nginx:alpine serves `dist/`.

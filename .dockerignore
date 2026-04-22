@@ -1,0 +1,11 @@
+node_modules
+dist
+.astro
+.git
+.gitignore
+.dockerignore
+.env*
+.playwright-mcp
+*.original.md
+README.md
+CLAUDE.md

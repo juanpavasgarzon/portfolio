@@ -1,0 +1,11 @@
+{
+  "order": 3,
+  "kind": "Live · Editorial",
+  "chips": ["Full-Stack", "CMS", "Email"],
+  "links": [{ "label": "Live", "href": "https://newsletter.pavas.io/es/articles" }],
+  "name": { "es": "Pavas Newsletter", "en": "Pavas Newsletter" },
+  "desc": {
+    "es": "Blog y newsletter de artículos sobre desarrollo de software. Contenido editorial con suscripción por email y soporte bilingüe ES/EN.",
+    "en": "Blog & newsletter on software development. Editorial content with email subscription and bilingual ES/EN support."
+  }
+}

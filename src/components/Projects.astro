@@ -1,0 +1,45 @@
+---
+import { getCollection } from 'astro:content';
+import { useT, type Lang } from '@/i18n';
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const t = useT(lang);
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<section id="work">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="section-label">{t('work.label')}</span>
+      <h2 class="section-title">{t('work.title')}</h2>
+    </div>
+    <div class="projects-grid">
+      {projects.map(({ data }) => (
+        <a class="project reveal" href={data.links[0].href} target="_blank" rel="noopener">
+          <div class="project-head">
+            <span class="project-kind">{data.kind}</span>
+            <span class="project-arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17L17 7M7 7h10v10"/>
+              </svg>
+            </span>
+          </div>
+          <h3>{data.name[lang]}</h3>
+          <p class="project-desc">{data.desc[lang]}</p>
+          <div class="project-stack">
+            {data.chips.map(chip => <span class="chip">{chip}</span>)}
+          </div>
+          <div class="project-links">
+            {data.links.map(link => (
+              <span class="project-link" data-href={link.href}>
+                {link.label} <span>↗</span>
+              </span>
+            ))}
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

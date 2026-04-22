@@ -1,0 +1,30 @@
+---
+import Layout      from '@/layouts/Layout.astro';
+import Nav         from '@/components/Nav.astro';
+import Hero        from '@/components/Hero.astro';
+import Skills      from '@/components/Skills.astro';
+import Experience  from '@/components/Experience.astro';
+import Projects    from '@/components/Projects.astro';
+import Blog        from '@/components/Blog.astro';
+import Contact     from '@/components/Contact.astro';
+import Footer      from '@/components/Footer.astro';
+import { SITE }    from '@/config/site';
+
+const lang = 'es' as const;
+---
+<Layout
+  lang={lang}
+  title={`${SITE.name} — ${SITE.jobTitle}`}
+  description="Full-Stack Developer enfocado en entregar software de alta calidad, escalable y mantenible. Construyo soluciones web y móviles end-to-end."
+  canonicalUrl={`${SITE.url}/`}
+  alternateUrl={`${SITE.url}/en/`}
+>
+  <Nav        lang={lang} />
+  <Hero       lang={lang} />
+  <Skills     lang={lang} />
+  <Experience lang={lang} />
+  <Projects   lang={lang} />
+  <Blog       lang={lang} />
+  <Contact    lang={lang} />
+  <Footer     lang={lang} />
+</Layout>

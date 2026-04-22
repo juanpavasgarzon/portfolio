@@ -1,0 +1,15 @@
+---
+import { useT, type Lang } from '@/i18n';
+import { SITE } from '@/config/site';
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const t = useT(lang);
+---
+
+<footer>
+  <div class="wrap foot-inner">
+    <span>© 2026 · {SITE.name}</span>
+    <span>{t('footer.tag')}</span>
+  </div>
+</footer>

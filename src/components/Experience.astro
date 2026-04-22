@@ -1,0 +1,36 @@
+---
+import { getCollection } from 'astro:content';
+import { useT, type Lang } from '@/i18n';
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const t = useT(lang);
+
+const experiences = (await getCollection('experience')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<section id="experience">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="section-label">{t('exp.label')}</span>
+      <h2 class="section-title">{t('exp.title')}</h2>
+    </div>
+    <div class="timeline">
+      {experiences.map(({ data }) => (
+        <article class="tl-item reveal">
+          <div class="tl-head">
+            <span class="tl-role">{data.role[lang]}</span>
+            <span class="tl-company">{data.company}</span>
+          </div>
+          <p class="tl-body">{data.summary[lang]}</p>
+          <ul class="tl-bullets">
+            {data.bullets.map(bullet => <li>{bullet[lang]}</li>)}
+          </ul>
+          <div class="tl-stack">
+            {data.chips.map(chip => <span class="chip">{chip}</span>)}
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

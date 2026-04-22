@@ -1,0 +1,44 @@
+---
+import { useT, type Lang } from '@/i18n';
+import { SKILLS } from '@/data/skills';
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const t = useT(lang);
+---
+
+<section id="skills">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="section-label">{t('skills.label')}</span>
+      <h2 class="section-title">{t('skills.title')}</h2>
+    </div>
+    <div class="skills-grid">
+      {SKILLS.map(group => (
+        <div class="skill-group">
+          <h3><span class="num">{group.num}</span> {group.label[lang]}</h3>
+          <div class="skill-items">
+            {group.items.map(skill => (
+              <a class="skill" href={skill.docsUrl} target="_blank" rel="noopener">
+                <img
+                  src={`https://cdn.simpleicons.org/${skill.slug}`}
+                  alt={skill.name}
+                  class="skill-icon"
+                />
+                <span class="skill-name">{skill.name}</span>
+                <span class="ext">↗</span>
+                <span class="skill-level">{skill.level}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLImageElement>('.skill-icon').forEach(img =>
+    img.addEventListener('error', () => { img.style.display = 'none'; })
+  );
+</script>

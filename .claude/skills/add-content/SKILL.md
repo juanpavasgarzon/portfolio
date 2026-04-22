@@ -1,38 +1,74 @@
 ---
 name: add-content
-description: Add a new entry to the portfolio (project, experience, skill, or blog article). Reminds Claude of the exact data schemas and i18n requirements.
+description: Add a new entry to the portfolio (project, experience, skill, or blog article). Reminds Claude of the exact schemas and file locations.
 ---
 
-All content lives in arrays in script.js. Only modify script.js — render functions pick up changes automatically, no HTML edits needed.
+## New project → `src/content/projects/<slug>.json`
 
-## Array schemas
-
-**PROJECTS**
-```js
-{ title: "string", tag: "string", desc: "i18n.key", link: "url", github: "url" }
+```json
+{
+  "order": 7,
+  "kind": "Live · Full-Stack",
+  "chips": ["React", "Node.js"],
+  "links": [
+    { "label": "Live",   "href": "https://..." },
+    { "label": "GitHub", "href": "https://..." }
+  ],
+  "name": { "es": "Nombre",      "en": "Name" },
+  "desc": { "es": "Descripción.", "en": "Description." }
+}
 ```
 
-**EXPERIENCE**
-```js
-{ role: "i18n.key", company: "string", period: "string", desc: "i18n.key", stack: ["string"] }
+## New experience → `src/content/experience/<slug>.json`
+
+```json
+{
+  "order": 4,
+  "company": "Company Name",
+  "chips": ["TypeScript", "React"],
+  "role":    { "es": "Rol",     "en": "Role" },
+  "summary": { "es": "Resumen.", "en": "Summary." },
+  "bullets": [
+    { "es": "Logro 1.", "en": "Achievement 1." },
+    { "es": "Logro 2.", "en": "Achievement 2." },
+    { "es": "Logro 3.", "en": "Achievement 3." }
+  ]
+}
 ```
 
-**SKILLS**
-```js
-{ icon: "emoji", label: "i18n.key" }
+Astro validates both against Zod schemas in `src/content/config.ts` at build time.
+
+## New article → `src/data/articles.ts`
+
+Add to `ARTICLES` array:
+```ts
+{
+  slug:     'my-article',
+  tag:      { es: 'Categoría', en: 'Category' },
+  title:    { es: 'Título',    en: 'Title' },
+  date:     { es: '1 Ene 2025', en: 'Jan 1, 2025' },
+  readTime: '5 min',
+  href: {
+    es: 'https://newsletter.pavas.io/es/articles/...',
+    en: 'https://newsletter.pavas.io/en/articles/...',
+  },
+}
 ```
 
-**ARTICLES**
-```js
-{ title: "i18n.key", date: "YYYY-MM-DD", tag: "string", link: "url" }
+## New skill → `src/data/skills.ts`
+
+Add to right `items` array inside `SKILLS`:
+```ts
+{ name: 'SkillName', slug: 'simpleicons-slug', level: 'senior' | 'mid', docsUrl: 'https://...' }
 ```
 
-## i18n rule
+## New UI string → both locale files
 
-Fields marked `i18n.key` must have matching entries in **both** `translations.es` and `translations.en` (lines 4–227 of script.js). Use dot notation: `projects.myproject.desc`.
+Add key to **both** `src/i18n/locales/es.ts` and `src/i18n/locales/en.ts`.
+TS errors at build if `en.ts` missing any key from `es.ts` (`satisfies Locale`).
 
-## Steps
+## Verify
 
-1. Add the entry to the correct array in script.js
-2. Add both ES and EN translations for every i18n key used
-3. Verify no translation key is missing (grep for the key in both language objects)
+```bash
+npm run build
+```

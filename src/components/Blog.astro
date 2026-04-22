@@ -1,0 +1,50 @@
+---
+import { useT, type Lang } from '@/i18n';
+import { ARTICLES } from '@/data/articles';
+
+const GRID_SIZE = 3;
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const t = useT(lang);
+
+const placeholderCount = Math.max(0, GRID_SIZE - ARTICLES.length);
+---
+
+<section id="blog">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="section-label">{t('blog.label')}</span>
+      <h2 class="section-title">{t('blog.title')}</h2>
+    </div>
+    <div class="blog-grid">
+      {ARTICLES.map(article => (
+        <a class="article reveal" href={article.href[lang]} target="_blank" rel="noopener">
+          <div class="article-meta">
+            <span class="article-tag">{article.tag[lang]}</span>
+            <span>{article.date[lang]}</span>
+            <span>·</span>
+            <span>{article.readTime}</span>
+          </div>
+          <h3>{article.title[lang]}</h3>
+          <span class="article-read">{t('blog.read')}</span>
+        </a>
+      ))}
+      {Array.from({ length: placeholderCount }).map(() => (
+        <div class="article placeholder reveal">
+          <div class="article-meta">
+            <span class="article-tag">{t('blog.soon')}</span>
+          </div>
+          <h3>{t('blog.soon')}</h3>
+          <p style="color:var(--text-faint); font-size:.9rem;">{t('blog.soon.desc')}</p>
+        </div>
+      ))}
+    </div>
+    <div class="newsletter-cta reveal">
+      <p>{t('blog.cta.text')}</p>
+      <a class="mono-link" href={t('blog.cta.link.href')} target="_blank" rel="noopener">
+        {t('blog.cta.link')}
+      </a>
+    </div>
+  </div>
+</section>

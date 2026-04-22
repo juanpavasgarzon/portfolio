@@ -1,0 +1,27 @@
+{
+  "order": 2,
+  "company": "Extiblu",
+  "chips": ["Laravel", "PHP", "React", "MySQL", "Docker"],
+  "role": {
+    "es": "Líder Técnico",
+    "en": "Tech Lead"
+  },
+  "summary": {
+    "es": "Lideré el desarrollo técnico de productos y servicios, coordinando equipo, arquitectura y delivery.",
+    "en": "Led the technical development of products and services — team, architecture and delivery."
+  },
+  "bullets": [
+    {
+      "es": "Dirección técnica de equipo en features clave y entregas multi-proyecto.",
+      "en": "Technical direction for multi-project deliveries."
+    },
+    {
+      "es": "Definición de arquitectura, patrones y estándares de calidad del código.",
+      "en": "Defined architecture, patterns and code-quality standards."
+    },
+    {
+      "es": "Puente entre negocio y desarrollo: traducir requerimientos a soluciones viables.",
+      "en": "Bridge between business and engineering: turning requirements into viable solutions."
+    }
+  ]
+}

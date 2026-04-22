@@ -1,0 +1,68 @@
+---
+import { useT, type Lang } from '@/i18n';
+import { SITE } from '@/config/site';
+
+const TYPING_ROLES = ['Full-Stack Developer', 'Clean Code Advocate', 'Problem Solver', 'Web & Mobile'];
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const t = useT(lang);
+---
+
+<section class="hero" id="top">
+  <div class="wrap hero-inner">
+    <div class="hero-text stagger">
+      <span class="eyebrow"><span class="pulse"></span> {t('hero.available')}</span>
+      <h1>
+        Juan Fernando <br/>
+        Pavas <span class="accent-2">Garzón</span>
+      </h1>
+      <div class="type-row">
+        <span class="tag">&lt;role&gt;</span>
+        <span class="typed" id="typed" data-roles={JSON.stringify(TYPING_ROLES)}></span><span class="caret"></span>
+        <span class="tag">&lt;/role&gt;</span>
+      </div>
+      <p class="bio">{t('hero.bio')}</p>
+      <div class="cta-row">
+        <a href="#work" class="btn btn-primary">
+          <span>{t('hero.cta.projects')}</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M13 5l7 7-7 7"/>
+          </svg>
+        </a>
+        <a href={SITE.cvFile} download class="btn btn-ghost" id="cvBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+          </svg>
+          <span>{t('hero.cta.cv')}</span>
+        </a>
+      </div>
+      <div class="hero-meta">
+        <span>{t('hero.loc')}</span>
+        <span class="dot"></span>
+        <a href={SITE.github} target="_blank" rel="noopener">github.com/{SITE.githubHandle}</a>
+        <span class="dot"></span>
+        <span>{SITE.timezone}</span>
+      </div>
+    </div>
+
+    <div class="avatar-card">
+      <div class="avatar-photo">
+        <img
+          id="avatarPhoto"
+          src={SITE.avatarUrl}
+          alt={SITE.name}
+          style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; border-radius:inherit;"
+        />
+      </div>
+      <div class="avatar-meta">
+        <span>JUAN · FULLSTACK</span>
+        <span class="badge">v2026</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.getElementById('avatarPhoto')?.addEventListener('error', (e) => (e.target as HTMLElement).remove());
+</script>

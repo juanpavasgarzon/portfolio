@@ -1,0 +1,70 @@
+---
+import { useT, type Lang } from '@/i18n';
+import { SITE } from '@/config/site';
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const t = useT(lang);
+---
+
+<section id="contact">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="section-label">{t('contact.label')}</span>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-intro reveal">
+        <h2 set:html={t('contact.title')} />
+        <p>{t('contact.lead')}</p>
+        <div class="contact-links">
+          <a href={`mailto:${SITE.email}`} class="contact-link">
+            <span>Email</span><span class="arrow">↗</span>
+          </a>
+          <a href={SITE.linkedin} target="_blank" rel="noopener" class="contact-link">
+            <span>LinkedIn</span><span class="arrow">↗</span>
+          </a>
+          <a href={SITE.github} target="_blank" rel="noopener" class="contact-link">
+            <span>GitHub</span><span class="arrow">↗</span>
+          </a>
+        </div>
+      </div>
+
+      <form
+        class="contact-form reveal"
+        id="contactForm"
+        novalidate
+        data-email={SITE.email}
+        data-err-empty={t('contact.err.empty')}
+        data-err-email={t('contact.err.email')}
+        data-ok={t('contact.ok')}
+        data-subject={t('contact.subject')}
+      >
+        <div class="field">
+          <label for="name">{t('contact.form.name')}</label>
+          <input type="text"  id="name"  name="name"  required placeholder={t('contact.form.name.ph')} />
+        </div>
+        <div class="field">
+          <label for="email">{t('contact.form.email')}</label>
+          <input type="email" id="email" name="email" required placeholder={t('contact.form.email.ph')} />
+        </div>
+        <div class="field">
+          <label for="msg">{t('contact.form.msg')}</label>
+          <textarea id="msg" name="msg" required placeholder={t('contact.form.msg.ph')}></textarea>
+        </div>
+        <p class="form-hint">
+          {lang === 'es'
+            ? 'Al enviar, abriré tu cliente de email con el mensaje pre-escrito hacia '
+            : 'On submit, your email client will open with a pre-written message to '}
+          <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+        </p>
+        <button type="submit" class="btn btn-primary">
+          <span>{t('contact.form.send')}</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M13 5l7 7-7 7"/>
+          </svg>
+        </button>
+        <div class="form-status" id="formStatus" aria-live="polite"></div>
+      </form>
+    </div>
+  </div>
+</section>
