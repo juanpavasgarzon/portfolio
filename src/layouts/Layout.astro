@@ -186,58 +186,6 @@ const jsonLd = {
       });
     });
 
-    const cvBtn = document.getElementById('cvBtn') as HTMLAnchorElement | null;
-    if (cvBtn) {
-      cvBtn.addEventListener('click', async (e) => {
-        try {
-          const response = await fetch('/CV-Juan-Pavas.pdf', { method: 'HEAD' });
-          if (response.ok) return;
-        } catch (_) {}
-        e.preventDefault();
-        const email = (document.getElementById('contactForm') as HTMLFormElement | null)?.dataset.email ?? '';
-        const lines = [
-          'Juan Fernando Pavas Garzon', 'Full-Stack Developer',
-          'Medellin / Rionegro, Colombia', '',
-          `Email   : ${email}`,
-          'GitHub  : github.com/juanpavasgarzon',
-          'LinkedIn: linkedin.com/in/juanpavasgarzon', '',
-          'Experience:',
-          '- Senior FullStack Developer, Team 360 Staffing',
-          '- Tech Lead, Extiblu',
-          '- FullStack Developer Junior > Middle > Senior, Extiblu', '',
-          'Stack: React, React Native, TypeScript, Node.js, NestJS,',
-          'Express, Laravel, PHP, .NET/C#, MySQL, MongoDB, Docker.', '',
-          'Generated from pavas.dev',
-        ];
-        const escape = (s: string) => s.replace(/\\/g, '\\\\').replace(/\(/g, '\\(').replace(/\)/g, '\\)');
-        let streamContent = 'BT /F1 12 Tf 14 TL 60 780 Td ';
-        lines.forEach((line, i) => { streamContent += (i === 0 ? '' : 'T* ') + `(${escape(line)}) Tj `; });
-        streamContent += 'ET';
-        const pdfObjects = [
-          '<< /Type /Catalog /Pages 2 0 R >>',
-          '<< /Type /Pages /Kids [3 0 R] /Count 1 >>',
-          `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>`,
-          `<< /Length ${streamContent.length} >>\nstream\n${streamContent}\nendstream`,
-          '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>',
-        ];
-        let pdfContent = '%PDF-1.4\n';
-        const offsets: number[] = [];
-        pdfObjects.forEach((obj, i) => { offsets.push(pdfContent.length); pdfContent += `${i + 1} 0 obj\n${obj}\nendobj\n`; });
-        const xrefOffset = pdfContent.length;
-        pdfContent += `xref\n0 ${pdfObjects.length + 1}\n0000000000 65535 f \n`;
-        offsets.forEach(o => (pdfContent += String(o).padStart(10, '0') + ' 00000 n \n'));
-        pdfContent += `trailer\n<< /Size ${pdfObjects.length + 1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`;
-        const blob = new Blob([pdfContent], { type: 'application/pdf' });
-        const objectUrl = URL.createObjectURL(blob);
-        const anchor = document.createElement('a');
-        anchor.href = objectUrl;
-        anchor.download = 'CV-Juan-Pavas.pdf';
-        document.body.appendChild(anchor);
-        anchor.click();
-        anchor.remove();
-        setTimeout(() => URL.revokeObjectURL(objectUrl), 2000);
-      });
-    }
 
     const contactForm   = document.getElementById('contactForm') as HTMLFormElement | null;
     const formStatusEl  = document.getElementById('formStatus');
