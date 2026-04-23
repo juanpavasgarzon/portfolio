@@ -14,6 +14,10 @@ export default defineConfig({
   },
   integrations: [
     sitemap({
+      serialize(item) {
+        item.lastmod = new Date().toISOString();
+        return item;
+      },
       i18n: {
         defaultLocale: 'es',
         locales: {

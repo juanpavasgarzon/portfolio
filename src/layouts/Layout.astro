@@ -16,9 +16,9 @@ const { lang, title, description, canonicalUrl, alternateUrl } = Astro.props;
 const hreflangEs = lang === 'es' ? canonicalUrl : alternateUrl;
 const hreflangEn = lang === 'en' ? canonicalUrl : alternateUrl;
 
-const jsonLd = {
-  '@context':  'https://schema.org',
+const personSchema = {
   '@type':     'Person',
+  '@id':       `${SITE.url}/#person`,
   name:        SITE.name,
   url:         SITE.url,
   email:       SITE.email,
@@ -27,6 +27,29 @@ const jsonLd = {
   sameAs:      [SITE.github, SITE.linkedin],
   knowsAbout:  SITE.techStack,
   address:     { '@type': 'PostalAddress', addressLocality: 'Medellín', addressCountry: 'CO' },
+};
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type':     'ProfilePage',
+      '@id':       `${canonicalUrl}#webpage`,
+      url:         canonicalUrl,
+      name:        title,
+      description: description,
+      inLanguage:  lang === 'es' ? 'es-CO' : 'en-US',
+      mainEntity:  personSchema,
+    },
+    {
+      '@type':          'WebSite',
+      '@id':            `${SITE.url}/#website`,
+      url:              SITE.url,
+      name:             SITE.name,
+      publisher:        { '@id': `${SITE.url}/#person` },
+    },
+    personSchema,
+  ],
 };
 ---
 <!DOCTYPE html>
@@ -46,9 +69,9 @@ const jsonLd = {
   <meta property="og:url"               content={canonicalUrl} />
   <meta property="og:title"             content={title} />
   <meta property="og:description"       content={description} />
-  <meta property="og:image"             content={SITE.avatarUrl} />
-  <meta property="og:image:width"       content="460" />
-  <meta property="og:image:height"      content="460" />
+  <meta property="og:image"             content={SITE.ogImageUrl} />
+  <meta property="og:image:width"       content="1200" />
+  <meta property="og:image:height"      content="630" />
   <meta property="og:image:alt"         content={SITE.name} />
   <meta property="og:locale"            content={lang === 'es' ? 'es_CO' : 'en_US'} />
   <meta property="og:locale:alternate"  content={lang === 'es' ? 'en_US' : 'es_CO'} />
@@ -58,12 +81,14 @@ const jsonLd = {
   <meta name="twitter:url"         content={canonicalUrl} />
   <meta name="twitter:title"       content={title} />
   <meta name="twitter:description" content={description} />
-  <meta name="twitter:image"       content={SITE.avatarUrl} />
+  <meta name="twitter:image"       content={SITE.ogImageUrl} />
   <meta name="twitter:creator"     content={SITE.twitterHandle} />
 
   <link rel="alternate" hreflang="es"        href={hreflangEs} />
   <link rel="alternate" hreflang="en"        href={hreflangEn} />
   <link rel="alternate" hreflang="x-default" href={`${SITE.url}/`} />
+
+  <meta name="google-site-verification" content="7j5-6SzUzB95Sk3r2BSUOT06rXHFDKESBOYseVCnrWU" />
 
   <meta name="theme-color" content="#7C3AED" />
 

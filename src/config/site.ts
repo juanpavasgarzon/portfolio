@@ -8,6 +8,7 @@ export const SITE = {
   linkedin:      'https://www.linkedin.com/in/juanpavasgarzon/',
   twitterHandle: '@juanpavasgarzon',
   avatarUrl:     'https://avatars.githubusercontent.com/u/87050643?v=4',
+  ogImageUrl:    'https://portfolio.pavas.io/og-image.svg',
   location:      'Medellín · Rionegro, CO',
   timezone:      'GMT−5',
   techStack:     ['React', 'TypeScript', 'Node.js', 'NestJS', 'Laravel', 'PHP', '.NET', 'Docker', 'MySQL', 'PostgreSQL', 'MongoDB'],
