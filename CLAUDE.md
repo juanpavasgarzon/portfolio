@@ -42,7 +42,7 @@ src/
   styles/
     global.css
 public/
-  favicon.svg · CV-Juan-Pavas.pdf · robots.txt
+  favicon.svg · juan-pavas-cv.pdf · robots.txt
 ```
 
 ## Path alias

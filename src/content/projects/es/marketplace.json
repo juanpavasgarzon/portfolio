@@ -1,0 +1,8 @@
+{
+  "order": 1,
+  "kind": "Live · Full-Stack",
+  "chips": ["Full-Stack", "MinIO", "i18n"],
+  "links": [{ "label": "Live", "href": "https://marketplace.pavas.io/" }],
+  "name": "Pavas Marketplace",
+  "desc": "Plataforma de compra y venta segura. Catálogo multi-categoría, panel de usuario, favoritos, búsqueda y autenticación. Multi-idioma ES/EN."
+}

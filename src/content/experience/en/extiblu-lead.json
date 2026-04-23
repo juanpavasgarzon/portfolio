@@ -1,0 +1,12 @@
+{
+  "order": 2,
+  "company": "Extiblu",
+  "chips": ["Laravel", "PHP", "React", "MySQL", "Docker"],
+  "role": "Tech Lead",
+  "summary": "Led the technical development of products and services — team, architecture and delivery.",
+  "bullets": [
+    "Technical direction for multi-project deliveries.",
+    "Defined architecture, patterns and code-quality standards.",
+    "Bridge between business and engineering: turning requirements into viable solutions."
+  ]
+}

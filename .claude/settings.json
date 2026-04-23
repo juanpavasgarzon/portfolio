@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 -c \"import os,json,sys; i=json.loads(os.environ.get('CLAUDE_TOOL_INPUT','{}')); 'CV-Juan-Pavas.pdf' in i.get('file_path','') and (print('BLOCKED: CV-Juan-Pavas.pdf is binary — replace the file directly.') or sys.exit(1))\""
+            "command": "python3 -c \"import os,json,sys; i=json.loads(os.environ.get('CLAUDE_TOOL_INPUT','{}')); 'juan-pavas-cv.pdf' in i.get('file_path','') and (print('BLOCKED: juan-pavas-cv.pdf is binary — replace the file directly.') or sys.exit(1))\""
           }
         ]
       }

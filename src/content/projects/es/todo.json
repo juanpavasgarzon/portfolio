@@ -1,0 +1,8 @@
+{
+  "order": 6,
+  "kind": "GitHub · CLI",
+  "chips": ["CLI", "Clean Arch"],
+  "links": [{ "label": "GitHub", "href": "https://github.com/juanpavasgarzon/todo-console" }],
+  "name": "ToDo Console",
+  "desc": "Aplicación de consola para gestión de tareas. Ejercicio de arquitectura limpia y principios SOLID aplicados a una CLI."
+}

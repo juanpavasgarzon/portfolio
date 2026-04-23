@@ -1,0 +1,12 @@
+{
+  "order": 1,
+  "company": "Team 360 Staffing",
+  "chips": ["TypeScript", "Node.js", "React", ".NET"],
+  "role": "Senior FullStack Developer",
+  "summary": "End-to-end development of enterprise solutions. Technical leadership on critical features, architecture and team DX.",
+  "bullets": [
+    "Designed and shipped scalable production architectures.",
+    "Mentored junior developers and set code/review standards.",
+    "Integrated modern frontend and backend stacks on client projects."
+  ]
+}

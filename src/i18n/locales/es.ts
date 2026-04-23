@@ -42,7 +42,7 @@ export const es = {
   'contact.err.empty':     '✗ Completa todos los campos.',
   'contact.err.email':     '✗ Email no válido.',
   'contact.ok':            '✓ Abriendo tu cliente de email...',
-  'contact.subject':       'Contacto desde pavas.dev · {name}',
+  'contact.subject':       'Contacto desde portfolio.pavas.io · {name}',
 
   'footer.tag': 'Diseñado & codeado a mano · Medellín / Rionegro 🇨🇴',
 } as const;

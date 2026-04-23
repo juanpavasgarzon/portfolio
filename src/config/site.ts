@@ -1,5 +1,5 @@
 export const SITE = {
-  url:           'https://pavas.dev',
+  url:           'https://portfolio.pavas.io',
   name:          'Juan Fernando Pavas Garzón',
   jobTitle:      'Full-Stack Developer',
   email:         'garzonp2001@gmail.com',
@@ -10,6 +10,5 @@ export const SITE = {
   avatarUrl:     'https://avatars.githubusercontent.com/u/87050643?v=4',
   location:      'Medellín · Rionegro, CO',
   timezone:      'GMT−5',
-  cvFile:        '/CV-Juan-Pavas.pdf',
   techStack:     ['React', 'TypeScript', 'Node.js', 'NestJS', 'Laravel', 'PHP', '.NET', 'Docker', 'MySQL', 'PostgreSQL', 'MongoDB'],
 } as const;

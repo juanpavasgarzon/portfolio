@@ -1,0 +1,12 @@
+{
+  "order": 2,
+  "company": "Extiblu",
+  "chips": ["Laravel", "PHP", "React", "MySQL", "Docker"],
+  "role": "Líder Técnico",
+  "summary": "Lideré el desarrollo técnico de productos y servicios, coordinando equipo, arquitectura y delivery.",
+  "bullets": [
+    "Dirección técnica de equipo en features clave y entregas multi-proyecto.",
+    "Definición de arquitectura, patrones y estándares de calidad del código.",
+    "Puente entre negocio y desarrollo: traducir requerimientos a soluciones viables."
+  ]
+}

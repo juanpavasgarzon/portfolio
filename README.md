@@ -1,8 +1,8 @@
-# pavas.dev — Portfolio
+# portfolio.pavas.io — Portfolio
 
 Personal portfolio of **Juan Fernando Pavas Garzón**, Full-Stack Developer based in Medellín / Rionegro, Colombia.
 
-🌐 [pavas.dev](https://pavas.dev)
+🌐 [portfolio.pavas.io](https://portfolio.pavas.io)
 
 ## Stack
 
@@ -60,7 +60,7 @@ src/
   styles/global.css     # design tokens, dark/light theme
 public/
   favicon.svg
-  CV-Juan-Pavas.pdf
+  juan-pavas-cv.pdf
 ```
 
 ## Adding content

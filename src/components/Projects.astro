@@ -6,7 +6,8 @@ interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const t = useT(lang);
 
-const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const projects = (await getCollection('projects', ({ id }) => id.startsWith(lang + '/')))
+  .sort((a, b) => a.data.order - b.data.order);
 ---
 
 <section id="work">
@@ -26,8 +27,8 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
               </svg>
             </span>
           </div>
-          <h3>{data.name[lang]}</h3>
-          <p class="project-desc">{data.desc[lang]}</p>
+          <h3>{data.name}</h3>
+          <p class="project-desc">{data.desc}</p>
           <div class="project-stack">
             {data.chips.map(chip => <span class="chip">{chip}</span>)}
           </div>

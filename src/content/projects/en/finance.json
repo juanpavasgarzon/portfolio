@@ -1,0 +1,8 @@
+{
+  "order": 2,
+  "kind": "Live · Full-Stack",
+  "chips": ["Full-Stack", "Auth", "i18n"],
+  "links": [{ "label": "Live", "href": "https://finance.pavas.io/es/login" }],
+  "name": "Pavas Finance",
+  "desc": "Personal finance web app with auth, multi-language and dashboard. Track income, expenses and financial goals."
+}

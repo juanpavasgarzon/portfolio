@@ -1,7 +1,5 @@
 import { defineCollection, z } from 'astro:content';
 
-const bilingual = z.object({ es: z.string(), en: z.string() });
-
 const projects = defineCollection({
   type: 'data',
   schema: z.object({
@@ -9,8 +7,8 @@ const projects = defineCollection({
     kind:   z.string(),
     chips:  z.array(z.string()).min(1),
     links:  z.array(z.object({ label: z.string(), href: z.string().url() })).min(1),
-    name:   bilingual,
-    desc:   bilingual,
+    name:   z.string(),
+    desc:   z.string(),
   }),
 });
 
@@ -20,9 +18,9 @@ const experience = defineCollection({
     order:   z.number().int().positive(),
     company: z.string(),
     chips:   z.array(z.string()).min(1),
-    role:    bilingual,
-    summary: bilingual,
-    bullets: z.array(bilingual),
+    role:    z.string(),
+    summary: z.string(),
+    bullets: z.array(z.string()),
   }),
 });
 

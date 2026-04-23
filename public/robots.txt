@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://pavas.dev/sitemap-index.xml
+Sitemap: https://portfolio.pavas.io/sitemap-index.xml

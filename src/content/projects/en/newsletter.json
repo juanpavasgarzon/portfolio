@@ -1,0 +1,8 @@
+{
+  "order": 3,
+  "kind": "Live · Editorial",
+  "chips": ["Full-Stack", "CMS", "Email"],
+  "links": [{ "label": "Live", "href": "https://newsletter.pavas.io/es/articles" }],
+  "name": "Pavas Newsletter",
+  "desc": "Blog & newsletter on software development. Editorial content with email subscription and bilingual ES/EN support."
+}

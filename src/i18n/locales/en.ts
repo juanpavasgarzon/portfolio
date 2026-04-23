@@ -44,7 +44,7 @@ export const en = {
   'contact.err.empty':     '✗ Please fill in all fields.',
   'contact.err.email':     '✗ Invalid email.',
   'contact.ok':            '✓ Opening your email client...',
-  'contact.subject':       'Contact from pavas.dev · {name}',
+  'contact.subject':       'Contact from portfolio.pavas.io · {name}',
 
   'footer.tag': 'Hand-designed & hand-coded · Medellín / Rionegro 🇨🇴',
 } as const satisfies Locale;

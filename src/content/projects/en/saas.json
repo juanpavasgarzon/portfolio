@@ -1,0 +1,8 @@
+{
+  "order": 4,
+  "kind": "GitHub · Backend",
+  "chips": ["Backend", "REST", "Multi-tenant"],
+  "links": [{ "label": "GitHub", "href": "https://github.com/juanpavasgarzon/saas-api" }],
+  "name": "SaaS API",
+  "desc": "Base API for multi-tenant SaaS products. Auth, user management and a scalable architecture ready for production."
+}

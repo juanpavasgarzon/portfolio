@@ -1,0 +1,11 @@
+{
+  "order": 5,
+  "kind": "GitHub · Full-Stack",
+  "chips": ["Full-Stack", "Domain-Driven"],
+  "links": [
+    { "label": "Frontend", "href": "https://github.com/juanpavasgarzon/opportunities-front" },
+    { "label": "Backend",  "href": "https://github.com/juanpavasgarzon/opportunities-back"  }
+  ],
+  "name": "Opportunities",
+  "desc": "Platform to discover and manage job & business opportunities. Split across frontend and backend repos."
+}
