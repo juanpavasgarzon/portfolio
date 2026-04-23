@@ -1,6 +1,7 @@
 import type { Locale } from './es';
 
 export const en = {
+  'nav.title':      'Portfolio',
   'nav.skills':     'Skills',
   'nav.experience': 'Experience',
   'nav.work':       'Projects',

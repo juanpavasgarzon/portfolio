@@ -1,4 +1,5 @@
 export const es = {
+  'nav.title':      'Portafolio',
   'nav.skills':     'Skills',
   'nav.experience': 'Experiencia',
   'nav.work':       'Proyectos',
